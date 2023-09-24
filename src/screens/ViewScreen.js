@@ -1,0 +1,149 @@
+import React, { useState, useEffect } from "react";
+import {
+	StyleSheet,
+	Text,
+	View,
+	FlatList,
+	TouchableOpacity,
+	TextInput,
+} from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import data from "../data/subject.json";
+
+const itemsPerPage = 10;
+
+const commonStyles = {
+	borderRadius: 8,
+};
+
+const ViewScreen = () => {
+	const [currentPage, setCurrentPage] = useState(0);
+	const [searchText, setSearchText] = useState("");
+	const [filteredData, setFilteredData] = useState([]);
+
+	const filterData = (text) => {
+		const filtered = text
+			? data.filter(
+					({ subject_name, sub_id }) =>
+						subject_name.toLowerCase().includes(text.toLowerCase()) ||
+						sub_id.toLowerCase().includes(text.toLowerCase())
+			  )
+			: data;
+		setFilteredData(filtered);
+	};
+
+	useEffect(() => {
+		filterData(searchText);
+	}, [searchText]);
+
+	const startIndex = currentPage * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+	const displayedData = searchText
+		? filteredData.slice(startIndex, endIndex)
+		: data.slice(startIndex, endIndex);
+
+	const renderItem = ({ item }) => (
+		<View
+            style={styles.card}
+        >
+			<Text style={styles.itemText}>{item.subject_name}</Text>
+			<Text style={styles.itemText}>{item.sub_code}</Text>
+			<TouchableOpacity style={
+                {
+                    position: "absolute",
+                    right: 10,
+                    top: 10,
+                }
+            }>
+				<FontAwesome
+					name="calendar-plus-o"
+					size={20}
+					color="green"
+					onPress={() => {}}
+				/>
+			</TouchableOpacity>
+		</View>
+	);
+
+	return (
+		<View style={styles.container}>
+			<Text style={styles.title}>ViewScreen</Text>
+			<View style={styles.searchContainer}>
+				<FontAwesome
+					name="search"
+					size={20}
+					color="gray"
+					style={styles.searchIcon}
+				/>
+				<TextInput
+					style={styles.searchInput}
+					placeholder="Search..."
+					onChangeText={(text) => setSearchText(text)}
+					value={searchText}
+				/>
+			</View>
+			<FlatList
+				data={displayedData}
+				renderItem={renderItem}
+				keyExtractor={(item) => item._id.toString()}
+			/>
+		</View>
+	);
+};
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		paddingHorizontal: 16,
+		paddingVertical: 20,
+		backgroundColor: "#FFFFFF",
+	},
+	title: {
+		fontSize: 24,
+		fontWeight: "bold",
+		marginBottom: 16,
+		color: "#333333",
+	},
+	item: {
+		backgroundColor: "#FFFFFF",
+		padding: 16,
+		marginBottom: 8,
+		elevation: 2,
+		...commonStyles,
+		borderRadius: 4,
+	},
+	itemText: {
+		fontSize: 16,
+		color: "#333333",
+	},
+	searchContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginBottom: 16,
+		backgroundColor: "#F5F5F5",
+		borderRadius: 4,
+	},
+	searchIcon: {
+		marginRight: 10,
+		marginLeft: 16,
+		color: "gray",
+	},
+    card: {
+        backgroundColor: "#FFFFFF",
+        padding: 16,
+        marginBottom: 8,
+        elevation: 2,
+        ...commonStyles,
+
+    },  
+	searchInput: {
+		flex: 1,
+		height: 40,
+		borderColor: "transparent",
+		borderWidth: 1,
+		paddingHorizontal: 8,
+		...commonStyles,
+	},
+});
+
+export default ViewScreen;
