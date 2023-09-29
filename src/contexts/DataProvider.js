@@ -6,45 +6,32 @@ export const useData = () => useContext(DataContext);
 
 const initialState = {
     _id: "",
-    sub_code: "",
     sub_id: "",
     subject_name: "",
-    edition: "",
-    timestart: "",
-    timeend: "",
-    day: "",
-    month: "",
-    year: "",
+    sec: "",
+    room: "",
+    time: "19:00-21:00",
+    day: "29/09/2021",
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
         case "SET_DATA":
-            return {
-                ...state,
-                _id: action.payload._id,
-                sub_code: action.payload.sub_code,
-                sub_id: action.payload.sub_id,
-                subject_name: action.payload.subject_name,
-                edition: action.payload.edition,
-                timestart: action.payload.timestart,
-                timeend: action.payload.timeend,
-                day: action.payload.day,
-                month: action.payload.month,
-                year: action.payload.year,
-            };
-
+            return { ...state, ...action.payload };
+        case "CLEAR_DATA":
+            return { ...initialState };
         default:
             return state;
     }
 }
 
 export const DataProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, [initialState]);
-    // const value = { state, dispatch };
+    const [state, dispatch] = useReducer(reducer, {...initialState});
+    const [list, setList] = useState([]);
+    listSubject = {list, setList}
 
     return (
-        <DataContext.Provider value={{ state, dispatch }}>
+        <DataContext.Provider value={{ state, dispatch, listSubject }}>
             {children}
         </DataContext.Provider>
     );

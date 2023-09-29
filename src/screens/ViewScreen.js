@@ -16,7 +16,7 @@ const commonStyles = {
 	borderRadius: 8,
 };
 
-const ViewScreen = () => {
+const ViewScreen = ({ navigation }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [searchText, setSearchText] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
@@ -43,23 +43,23 @@ const ViewScreen = () => {
 		: data.slice(startIndex, endIndex);
 
 	const renderItem = ({ item }) => (
-		<View
-            style={styles.card}
-        >
+		<View style={styles.card}>
 			<Text style={styles.itemText}>{item.subject_name}</Text>
-			<Text style={styles.itemText}>{item.sub_code}</Text>
-			<TouchableOpacity style={
-                {
-                    position: "absolute",
-                    right: 10,
-                    top: 10,
-                }
-            }>
+			<Text style={styles.itemText}>{item.sub_id}</Text>
+			<TouchableOpacity
+				style={{
+					position: "absolute",
+					right: 10,
+					top: 10,
+				}}
+			>
 				<FontAwesome
 					name="calendar-plus-o"
 					size={20}
 					color="green"
-					onPress={() => {}}
+					onPress={() => {
+						// navigation.navigate("StackAdd", { item: item });
+					}}
 				/>
 			</TouchableOpacity>
 		</View>
@@ -128,14 +128,13 @@ const styles = StyleSheet.create({
 		marginLeft: 16,
 		color: "gray",
 	},
-    card: {
-        backgroundColor: "#FFFFFF",
-        padding: 16,
-        marginBottom: 8,
-        elevation: 2,
-        ...commonStyles,
-
-    },  
+	card: {
+		backgroundColor: "#FFFFFF",
+		padding: 16,
+		marginBottom: 8,
+		elevation: 2,
+		...commonStyles,
+	},
 	searchInput: {
 		flex: 1,
 		height: 40,

@@ -12,7 +12,7 @@ const data = [
 		id: 2,
 		nisit_id: "6421600107",
 		username: "นภสร พุทธเจริญ",
-		image: require("../image/Peraw.jpg"),
+		image: require("../image/Praew.jpg"),
 	},
 	{
 		id: 3,

@@ -19,12 +19,27 @@ import { Ionicons } from "@expo/vector-icons";
 // Import Provider
 import { DataProvider } from "./src/contexts/DataProvider";
 
-const StackScreen = () => {
+const StackScreen = ({ navigation }) => {
 	const Stack = createNativeStackNavigator();
 
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="StackHome" component={HomeScreen} />
+			<Stack.Screen 
+				name="StackHome"
+				component={HomeScreen}
+				// add icon to header
+				options={{
+					headerRight: () => (
+						<Ionicons
+							name="add-outline"
+							size={30}
+							color="black"
+							style={{ marginRight: 10 }}
+							onPress={() => navigation.navigate("StackAdd")}
+						/>
+					),
+				}}
+			/>
 			<Stack.Screen name="StackAdd" component={AddScreen} />
 		</Stack.Navigator>
 	);
