@@ -17,7 +17,9 @@ import AddScreen from "./src/screens/stacks/AddScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 // Import Provider
-import { DataProvider } from "./src/contexts/DataProvider";
+// import { DataProvider, Provider } from "./src/contexts/DataProvider";
+
+import { Context, Provider } from "./src/contexts/SubjectProvider";
 
 const StackScreen = ({ navigation }) => {
 	const Stack = createNativeStackNavigator();
@@ -49,7 +51,7 @@ export default function App() {
 	const Tab = createBottomTabNavigator();
 
 	return (
-		<DataProvider>
+		<Provider>
 			<NavigationContainer>
 				<Tab.Navigator
 					screenOptions={{
@@ -87,6 +89,7 @@ export default function App() {
 					/>
 				</Tab.Navigator>
 			</NavigationContainer>
-		</DataProvider>
+		</Provider>
 	);
+
 }
