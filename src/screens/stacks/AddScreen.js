@@ -14,7 +14,7 @@ import {
 import { Context as SubjectContext } from "../../contexts/SubjectProvider";
 
 const AddScreen = ({ route, navigation }) => {
-	const { state, addTest, editTest } = useContext(SubjectContext);
+	const { state, addTest } = useContext(SubjectContext);
 	const [subject_name, setSubject_name] = useState("");
 	const [sec, setSec] = useState("");
 	const [room, setRoom] = useState("");
@@ -44,13 +44,15 @@ const AddScreen = ({ route, navigation }) => {
 		}
 	}, [route.params]);
 	return (
-		<ScrollView>
+		<ScrollView style={styles.container}>
 			<Text
 				style={{
 					fontSize: 20,
 					padding: 10,
 					borderBottomWidth: 1,
 					borderBottomColor: "#ccc",
+					alignSelf : "center",
+					fontWeight: "bold",
 				}}
 			>
 				{isEdit ? "Edit Subject" : "Add Subject"}
@@ -60,6 +62,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Subject Name"
+				numberOfLines={2}
 				onChangeText={(text) => setSubject_name(text)}
 				value={subject_name}
 			/>
@@ -68,6 +71,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Subject ID"
+				numberOfLines={2}
 				onChangeText={(text) => setSub_id(text)}
 				value={sub_id}
 			/>
@@ -76,6 +80,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Section"
+				numberOfLines={2}
 				keyboardType="numeric"
 				onChangeText={(text) => setSec(text)}
 				value={sec}
@@ -85,6 +90,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Room"
+				numberOfLines={2}
 				onChangeText={(text) => setRoom(text)}
 				value={room}
 			/>
@@ -93,6 +99,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Ex. 12/12/2023"
+				numberOfLines={2}
 				onChangeText={(text) => setDay(text)}
 				value={day}
 			/>
@@ -101,6 +108,7 @@ const AddScreen = ({ route, navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Ex. 10.00-12.00"
+				numberOfLines={2}
 				onChangeText={(text) => setTime(text)}
 				value={time}
 			/>
@@ -177,18 +185,12 @@ const AddScreen = ({ route, navigation }) => {
 						return;
 					}
 
-					// addTest(sub_id, subject_name, sec, room, time, day)
-					if (isEdit) {
-						// addTest(id, sub_id, subject_name, sec, room, time, day);
-						editTest(id, sub_id, subject_name, sec, room, time, day);
-					} else {
-						addTest(sub_id, subject_name, sec, room, time, day);
-					}
+					addTest(sub_id, subject_name, sec, room, time, day)
 					navigation.navigate("StackHome");
 				}}
 				underlayColor="#fff"
 			>
-				<Text style={styles.text}>submit</Text>
+				<Text style={styles.text}>Submit</Text>
 			</TouchableOpacity>
 		</ScrollView>
 	);
@@ -197,23 +199,30 @@ const AddScreen = ({ route, navigation }) => {
 export default AddScreen;
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		paddingHorizontal: 16,
+		paddingVertical: 5,
+		backgroundColor: "#FDF0F0",
+	},
 	label: {
 		marginTop: 10,
-		fontSize: 20,
+		fontSize: 18,
 		fontWeight: "bold",
 		fontStyle: "normal",
 		marginLeft: 10,
 		color: "#000",
 	},
 	input: {
-		fontSize: 18,
-		borderWidth: 2,
-		borderColor: "#67428e",
-		borderRadius: 10,
+		fontSize: 15,
+		borderWidth: 1.5,
+		borderColor: "#FF8989",
+		borderRadius: 20,
 		paddingLeft: 15,
-		margin: 5,
+		margin: 10,
 		marginBottom: 15,
 		backgroundColor: "#fff",
+		elevation : 2.5,
 	},
 	submit: {
 		marginRight: 100,
@@ -224,13 +233,13 @@ const styles = StyleSheet.create({
 		paddingBottom: 10,
 		backgroundColor: "#219C90",
 		borderRadius: 30,
-		borderWidth: 3,
-		borderColor: "#fff",
+		elevation : 3,
 	},
 	text: {
 		fontSize: 20,
 		alignSelf: "center",
 		borderRadius: 30,
 		color: "#fff",
+		fontWeight: "bold",
 	},
 });

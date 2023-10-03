@@ -31,24 +31,33 @@ const StackScreen = ({ navigation }) => {
 				component={HomeScreen}
 				// add icon to header
 				options={{
+					headerTintColor : "#fff",
+					headerStyle :{backgroundColor :'#FF8989'},
 					headerRight: () => (
 						<Ionicons
 							name="add-outline"
 							size={30}
-							color="black"
+							color="#fff"
 							style={{ marginRight: 10 }}
-							onPress={() => navigation.navigate("StackAdd")}
+							onPress={() => navigation.navigate("SUBJECT")}
 						/>
 					),
 				}}
 			/>
-			<Stack.Screen name="StackAdd" component={AddScreen} />
+			<Stack.Screen
+				name="StackAdd"
+				component={AddScreen}
+				options={{
+					headerTintColor : "#fff",
+					headerStyle :{backgroundColor :'#FF8989'}
+				}}
+			/>
 		</Stack.Navigator>
 	);
 };
 
 export default function App() {
-	const Tab = createBottomTabNavigator();
+	const Tab = createBottomTabNavigator();	
 
 	return (
 		<Provider>
@@ -73,6 +82,12 @@ export default function App() {
 						name="View"
 						component={ViewScreen}
 						options={{
+							headerShown : true,
+							headerTintColor : "#fff",
+							headerStyle : {
+								backgroundColor: "#FF8989",
+								shadowColor : "#000" ,
+							},
 							tabBarIcon: ({ color, size }) => (
 								<Ionicons name="book" color={color} size={size} />
 							),
@@ -92,4 +107,4 @@ export default function App() {
 		</Provider>
 	);
 
-}
+}	

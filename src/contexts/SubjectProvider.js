@@ -62,11 +62,10 @@ const deleteTest = (dispatch) => {
 };
 
 const editTest = (dispatch) => {
-	// return (id, sub_id, subject_name, sec, room, time, day) => {
 	return (id, sub_id, subject_name, sec, room, time, day) => {
 		dispatch({
 			type: "edit-test",
-			payload: { _id: id, sub_id, subject_name, sec, room, time, day },
+			payload: { id, sub_id, subject_name, sec, room, time, day },
 		});
 	};
 };

@@ -12,7 +12,7 @@ import data from "../data/subject.json";
 
 const itemsPerPage = 10;
 
-const ViewScreen = ({ navigation }) => {
+const ViewScreen = ({ route, navigation }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [searchText, setSearchText] = useState("");
 	const [filteredData, setFilteredData] = useState([]);
@@ -25,7 +25,7 @@ const ViewScreen = ({ navigation }) => {
 						subject_name.toLowerCase().includes(text.toLowerCase()) ||
 						// Note: ใช้ includes เพื่อค้นหาคำที่มีอยู่ใน String
 						sub_id.toLowerCase().includes(text.toLowerCase())
-			  )
+			)
 			: data;
 		setFilteredData(filtered);
 	};
@@ -65,7 +65,6 @@ const ViewScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>ViewScreen</Text>
 			<View style={styles.searchContainer}>
 				<FontAwesome
 					name="search"
@@ -94,13 +93,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal: 16,
 		paddingVertical: 20,
-		backgroundColor: "#FFFFFF",
+		backgroundColor: "#FDF0F0",
 	},
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
 		marginBottom: 16,
 		color: "#333333",
+		alignSelf : "center",
+		marginTop: 20,
 	},
 	item: {
 		backgroundColor: "#FFFFFF",
@@ -117,13 +118,14 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		marginBottom: 16,
-		backgroundColor: "#F5F5F5",
+		backgroundColor: "#fff",
 		borderRadius: 4,
 	},
 	searchIcon: {
 		marginRight: 10,
 		marginLeft: 16,
-		color: "gray",
+		color: "#000",
+		
 	},
 	card: {
 		backgroundColor: "#FFFFFF",
@@ -139,6 +141,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		paddingHorizontal: 8,
 		borderRadius: 8,
+		backgroundColor : "#fff",
 	},
 });
 

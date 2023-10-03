@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from "react-native";
 
 const data = [
 	{
@@ -34,19 +34,24 @@ const data = [
 
 const ProfileScreen = () => {
 	const renderItem = ({ item }) => (
+		
 		<View style={styles.personContainer}>
 			<Image source={item.image} style={styles.image} />
+			<Text style={styles.nisitId}>{item.nisit_id}</Text>
 			<Text style={styles.username}>{item.username}</Text>
-			<Text style={styles.nisitId}>NISIT ID: {item.nisit_id}</Text>
 			<Text style={styles.work}>{item.work}</Text>
 		</View>
 	);
 
 	return (
+		
 		<View style={styles.container}>
-			<Text style={styles.title}>Exam Schedule</Text>
-			<Text style={styles.subtitle}>University: Kasetsart University</Text>
-			<Text style={styles.subtitle}>Student</Text>
+
+			<View style={styles.box}>
+				<Text style={styles.title}>Exam Schedule</Text>
+				<Text style={styles.subtitle}>University: Kasetsart University</Text>
+			</View>
+			
 			<FlatList
 				data={data}
 				renderItem={renderItem}
@@ -63,18 +68,27 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		paddingHorizontal: 10,
-		marginTop: 100,
+		marginTop: 1,
+		backgroundColor : "#FDF0F0",
 	},
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
 		textAlign: "center",
+		color : "#000",
 	},
 	subtitle: {
 		fontSize: 18,
 		fontWeight: "bold",
 		textAlign: "center",
 		marginTop: 10,
+		color : "#000",
+	},
+	subtitle2 :{
+		fontSize: 18,
+		fontWeight: "bold",
+		textAlign: "center",
+		marginTop: 25,
 	},
 	flatList: {
 		alignItems: "center",
@@ -88,21 +102,32 @@ const styles = StyleSheet.create({
 		width: 100,
 		height: 100,
 		borderRadius: 50,
+		borderWidth: 1.5,
+		margin : 10,
 	},
 	username: {
 		fontSize: 18,
 		fontWeight: "bold",
-		marginTop: 10,
+		marginTop: 3,
 	},
 	nisitId: {
 		fontSize: 16,
-		color: "gray",
-	},
-	work: {
-		fontSize: 16,
-		color: "gray",
+		color: "#000",
 		marginTop: 10,
 	},
+	work: {
+		fontSize: 14,
+		color: "gray",
+		marginTop: 8,
+	},
+	box : {
+		backgroundColor : "#fff",
+		marginTop : 80,
+		padding : 15,
+		borderRadius: 20,
+		paddingHorizontal : 50,
+		elevation : 10,
+	}
 });
 
 export default ProfileScreen;

@@ -116,10 +116,27 @@ const HomeScreen = ({ navigation }) => {
 				data={afterSort}
 				renderItem={({ item }) => (
 					<View style={styles.label}>
+						{/* Edit */}
+						<TouchableOpacity
+							onPress={() => {
+								console.log(item)
+								navigation.navigate("StackAdd", { 
+									item: item,
+									isEdit: true,
+								});
+							}}
+						>
+							<View style={styles.list2}>
+							<FontAwesome name="edit" size={20} color="green" />
+							</View>
+						</TouchableOpacity>
+
 						<Text style={styles.title}>{item.subject_name}</Text>
-						<Text style={styles.subtitle}>{item.day}</Text>
-						<Text style={styles.subtitle}>{item.time}</Text>
-						<Text style={styles.subtitle}>{checkDate(item.day)}</Text>
+						<Text style={styles.title2}>{item.sub_id}   หมู่เรียน {item.sec}</Text>
+						<Text style={styles.subtitle}>ห้อง {item.room}</Text>
+						<Text style={styles.subtitle}>วันที่ {item.day}</Text>
+						<Text style={styles.subtitle}>เวลา {item.time}</Text>
+						<Text style={styles.subtitle4}>{checkDate(item.day)}</Text>
 						
 						<TouchableOpacity
 							onPress={() => {
@@ -133,20 +150,9 @@ const HomeScreen = ({ navigation }) => {
 								});
 							}}
 						>
+							<View style={styles.list}>
 							<FontAwesome name="trash" size={20} color="red" />
-						</TouchableOpacity>
-
-						{/* Edit */}
-						<TouchableOpacity
-							onPress={() => {
-								console.log(item)
-								navigation.navigate("StackAdd", { 
-									item: item,
-									isEdit: true,
-								});
-							}}
-						>
-							<FontAwesome name="edit" size={20} color="green" />
+							</View>
 						</TouchableOpacity>
 					</View>
 				)}
@@ -169,10 +175,24 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: 10,
+		
+	},
+	title2: {
+		fontSize: 15,
+		fontWeight: "bold",
+		marginBottom: 10,
 	},
 	subtitle: {
 		fontSize: 16,
 		marginBottom: 1,
+	},
+	subtitle4: {
+		fontSize: 16,
+		marginBottom: 1,
+		alignSelf : "center",
+		color: "green",
+		fontWeight : "bold",
+		marginTop : 10,
 	},
 	label: {
 		backgroundColor: "#FFFFFF",
@@ -188,4 +208,14 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		marginBottom: 15,
 	},
+	list : {
+		flexDirection : "row-reverse",
+		paddingLeft : 10,
+	},
+	list2 : {
+		flexDirection : "row-reverse",
+		paddingLeft : 6,
+		
+	}
+
 });
