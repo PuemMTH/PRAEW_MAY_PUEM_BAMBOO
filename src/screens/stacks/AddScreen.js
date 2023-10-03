@@ -14,7 +14,7 @@ import {
 import { Context as SubjectContext } from "../../contexts/SubjectProvider";
 
 const AddScreen = ({ route, navigation }) => {
-	const { state, addTest } = useContext(SubjectContext);
+	const { state, addTest, editTest } = useContext(SubjectContext);
 	const [subject_name, setSubject_name] = useState("");
 	const [sec, setSec] = useState("");
 	const [room, setRoom] = useState("");
@@ -177,7 +177,13 @@ const AddScreen = ({ route, navigation }) => {
 						return;
 					}
 
-					addTest(sub_id, subject_name, sec, room, time, day)
+					// addTest(sub_id, subject_name, sec, room, time, day)
+					if (isEdit) {
+						// addTest(id, sub_id, subject_name, sec, room, time, day);
+						editTest(id, sub_id, subject_name, sec, room, time, day);
+					} else {
+						addTest(sub_id, subject_name, sec, room, time, day);
+					}
 					navigation.navigate("StackHome");
 				}}
 				underlayColor="#fff"
