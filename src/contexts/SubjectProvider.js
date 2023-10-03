@@ -81,12 +81,11 @@ export const { Context, Provider } = createDataContext(
 		{
 			_id: "1",
 			sub_id: "01418223",
-			subject_name: "Database",
+			subject_name: "Algorithm",
 			sec: "700",
 			room: "CB2301",
-			time: `${new Date().getHours()-5}.${new Date().getMinutes()}-${new Date().getHours()-2}.${new Date().getMinutes()}`,
-			// day: "29/08/2021",
-			day: `${new Date().getDate()+2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+			time: "09.00-10.00",
+			day: `${new Date().getDate()-2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 		{
 			_id: "2",
@@ -94,7 +93,7 @@ export const { Context, Provider } = createDataContext(
 			subject_name: "Concepts",
 			sec: "700",
 			room: "CB2301",
-			time: `${new Date().getHours()+3}.${new Date().getMinutes()}-${new Date().getHours()+5}.${new Date().getMinutes()}`,
+			time: "08.00-12.00",
 			day: `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 		{
@@ -103,7 +102,7 @@ export const { Context, Provider } = createDataContext(
 			subject_name: "System",
 			sec: "700",
 			room: "CB2301",
-			time: `${new Date().getHours()}.${new Date().getMinutes()}-${new Date().getHours()+3}.${new Date().getMinutes()}`,
+			time: "13.00-16.00",
 			day: `${new Date().getDate()-2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 		{
@@ -112,7 +111,7 @@ export const { Context, Provider } = createDataContext(
 			subject_name: "Database System Concepts",
 			sec: "700",
 			room: "CB2301",
-			time: `${new Date().getHours()}.${new Date().getMinutes()}-${new Date().getHours()+3}.${new Date().getMinutes()}`,
+			time: "18.00-20.00",
 			day: `${new Date().getDate()-5}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 	]

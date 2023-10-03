@@ -12,16 +12,14 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { Context } from "../../contexts/SubjectProvider";
 
-const AlertE = (
-	{
-		title = "Delete",
-		message = "Are you sure to delete this subject?",
-		confirmText = "OK",
-		cancelText = "Cancel",
-		onPress = () => {},
-		onCancel = () => {},
-	}
-) => {
+const AlertE = ({
+	title = "Delete",
+	message = "Are you sure to delete this subject?",
+	confirmText = "OK",
+	cancelText = "Cancel",
+	onPress = () => {},
+	onCancel = () => {},
+}) => {
 	Alert.alert(
 		title,
 		message,
@@ -38,7 +36,7 @@ const AlertE = (
 		],
 		{ cancelable: false }
 	);
-}
+};
 
 const HomeScreen = ({ navigation }) => {
 	const { state, addTest, deleteTest } = useContext(Context);
@@ -47,17 +45,23 @@ const HomeScreen = ({ navigation }) => {
 		if (state !== undefined) {
 			const sortedData = [...state];
 			sortedData.sort((a, b) => {
-				var SortDayA = a.day.split("/").map(Number);
-				var SortDayB = b.day.split("/").map(Number);
-				// var SortTimeA = a.time.split(":").map(Number);
-				// var SortTimeB = b.time.split(":").map(Number);
-				if (SortDayA[2] !== SortDayB[2]) {
-					return SortDayA[2] - SortDayB[2];
-				}
-				if (SortDayA[1] !== SortDayB[1]) {
-					return SortDayA[1] - SortDayB[1];
-				}
-				return SortDayA[0] - SortDayB[0];
+				// var SortDayA = a.day.split("/").map(Number);
+				// var SortDayB = b.day.split("/").map(Number);
+
+				// if (SortDayA[2] !== SortDayB[2]) {
+				// 	return SortDayA[2] - SortDayB[2];
+				// }
+				// if (SortDayA[1] !== SortDayB[1]) {
+				// 	return SortDayA[1] - SortDayB[1];
+				// }
+				// return SortDayA[0] - SortDayB[0];
+				
+				const [dayA, monthA, yearA] = a.day.split("/").map(Number);
+				const [dayB, monthB, yearB] = b.day.split("/").map(Number);
+
+				if (yearA !== yearB) yearA - yearB
+				if (monthA !== monthB) monthA - monthB
+				return dayA - dayB
 			});
 			setAfterSort(sortedData);
 		}
@@ -70,23 +74,22 @@ const HomeScreen = ({ navigation }) => {
 			2: "สอบเร็วๆนี้",
 			3: "สอบไปแล้ว",
 		};
-	
+
 		const today = new Date();
 		const [day, month, year] = date.split("/");
-	
+
 		// Note: ใช้ parseInt เพื่อแปลงค่าจาก String เป็น Number
 		const examDate = new Date(year, parseInt(month) - 1, parseInt(day));
 		// Note: ใช้ Math.ceil เพื่อปัดเศษขึ้นเป็นจำนวนเต็ม
 		const diffTime = examDate - today;
 		// Note: ใช้ Math.ceil เพื่อปัดเศษขึ้นเป็นจำนวนเต็ม
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-		
-		// diffDays คือจำนวนวันที่เหลืออยู่จนถึงวันสอบ 
+
+		// diffDays คือจำนวนวันที่เหลืออยู่จนถึงวันสอบ
 		// 3 ถ้า diffDays < 0 แสดงว่าสอบไปแล้ว
 		// ถ้า diffDays === 0 แสดงว่าสอบวันนี้
 		// ถ้า diffDays <= 3 แสดงว่าใกล้ถึงวันสอบ
 		// ถ้า diffDays > 3 แสดงว่าสอบเร็วๆนี้
-
 
 		if (diffDays < 0) {
 			return text[3];
@@ -117,28 +120,36 @@ const HomeScreen = ({ navigation }) => {
 				renderItem={({ item }) => (
 					<View style={styles.label}>
 						{/* Edit */}
-						<TouchableOpacity
-							onPress={() => {
-								console.log(item)
-								navigation.navigate("StackAdd", { 
-									item: item,
-									isEdit: true,
-								});
+
+						{/* Make 2 Column */}
+
+						<View
+							style={{
+								flexDirection: "row",
+								flex: 1,
 							}}
 						>
-							<View style={styles.list2}>
-							<FontAwesome name="edit" size={20} color="green" />
-							</View>
-						</TouchableOpacity>
-
-						<Text style={styles.title}>{item.subject_name}</Text>
-						<Text style={styles.title2}>{item.sub_id}   หมู่เรียน {item.sec}</Text>
-						<Text style={styles.subtitle}>ห้อง {item.room}</Text>
-						<Text style={styles.subtitle}>วันที่ {item.day}</Text>
-						<Text style={styles.subtitle}>เวลา {item.time}</Text>
-						<Text style={styles.subtitle4}>{checkDate(item.day)}</Text>
-						
-						<TouchableOpacity
+							<Text
+								style={
+									styles.title	
+								}
+							>
+								{item.subject_name}
+							</Text>
+							<TouchableOpacity
+								onPress={() => {
+									console.log(item);
+									navigation.navigate("StackAdd", {
+										item: item,
+										isEdit: true,
+									});
+								}}
+							>
+								<View style={styles.list2}>
+									<FontAwesome name="edit" size={20} color="green" />
+								</View>
+							</TouchableOpacity>
+							<TouchableOpacity
 							onPress={() => {
 								AlertE({
 									title: "Delete",
@@ -151,9 +162,28 @@ const HomeScreen = ({ navigation }) => {
 							}}
 						>
 							<View style={styles.list}>
-							<FontAwesome name="trash" size={20} color="red" />
+								<FontAwesome name="trash" size={20} color="red" />
 							</View>
 						</TouchableOpacity>
+						</View>
+
+						<Text style={styles.title2}>
+							{item.sub_id} หมู่เรียน {item.sec}
+						</Text>
+						<Text style={styles.subtitle}>ห้อง {item.room}</Text>
+						<Text style={styles.subtitle}>วันที่ {item.day}</Text>
+						<Text style={styles.subtitle}>เวลา {item.time}</Text>
+						{
+							checkDate(item.day) === "สอบวันนี้" ? (
+								<Text style={[styles.subtitle4,{color: "green" }]}>{checkDate(item.day)}</Text>
+							) : checkDate(item.day) === "สอบเร็วๆนี้" ? (
+								<Text style={[styles.subtitle4,{color: "red" }]}>{checkDate(item.day)}</Text>
+							) : checkDate(item.day) === "ใกล้ถึงวันสอบ" ? (
+								<Text style={[styles.subtitle4,{color: "yellow" }]}>{checkDate(item.day)}</Text>
+							) : checkDate(item.day) === "สอบไปแล้ว" ? (
+								<Text style={[styles.subtitle4,{color: "gray" }]}>{checkDate(item.day)}</Text>
+							) : null
+						}
 					</View>
 				)}
 				keyExtractor={(item) => item._id}
@@ -175,7 +205,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "bold",
 		marginBottom: 10,
-		
+		flex: 1,
 	},
 	title2: {
 		fontSize: 15,
@@ -189,10 +219,9 @@ const styles = StyleSheet.create({
 	subtitle4: {
 		fontSize: 16,
 		marginBottom: 1,
-		alignSelf : "center",
-		color: "green",
-		fontWeight : "bold",
-		marginTop : 10,
+		alignSelf: "center",
+		fontWeight: "bold",
+		marginTop: 10,
 	},
 	label: {
 		backgroundColor: "#FFFFFF",
@@ -208,14 +237,12 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		marginBottom: 15,
 	},
-	list : {
-		flexDirection : "row-reverse",
-		paddingLeft : 10,
+	list: {
+		flexDirection: "row-reverse",
+		paddingLeft: 10,
 	},
-	list2 : {
-		flexDirection : "row-reverse",
-		paddingLeft : 6,
-		
-	}
-
+	list2: {
+		flexDirection: "row-reverse",
+		paddingLeft: 6,
+	},
 });
