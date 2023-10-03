@@ -12,10 +12,6 @@ import data from "../data/subject.json";
 
 const itemsPerPage = 10;
 
-const commonStyles = {
-	borderRadius: 8,
-};
-
 const ViewScreen = ({ navigation }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [searchText, setSearchText] = useState("");
@@ -25,13 +21,15 @@ const ViewScreen = ({ navigation }) => {
 		const filtered = text
 			? data.filter(
 					({ subject_name, sub_id }) =>
+						// Note: ใช้ includes เพื่อค้นหาคำที่มีอยู่ใน String
 						subject_name.toLowerCase().includes(text.toLowerCase()) ||
+						// Note: ใช้ includes เพื่อค้นหาคำที่มีอยู่ใน String
 						sub_id.toLowerCase().includes(text.toLowerCase())
 			  )
 			: data;
 		setFilteredData(filtered);
 	};
-
+	
 	useEffect(() => {
 		filterData(searchText);
 	}, [searchText]);
@@ -58,7 +56,7 @@ const ViewScreen = ({ navigation }) => {
 					size={20}
 					color="green"
 					onPress={() => {
-						// navigation.navigate("StackAdd", { item: item });
+						navigation.navigate("StackAdd", { item: item });
 					}}
 				/>
 			</TouchableOpacity>
@@ -109,8 +107,7 @@ const styles = StyleSheet.create({
 		padding: 16,
 		marginBottom: 8,
 		elevation: 2,
-		...commonStyles,
-		borderRadius: 4,
+		borderRadius: 8,
 	},
 	itemText: {
 		fontSize: 16,
@@ -133,7 +130,7 @@ const styles = StyleSheet.create({
 		padding: 16,
 		marginBottom: 8,
 		elevation: 2,
-		...commonStyles,
+		borderRadius: 8,
 	},
 	searchInput: {
 		flex: 1,
@@ -141,7 +138,7 @@ const styles = StyleSheet.create({
 		borderColor: "transparent",
 		borderWidth: 1,
 		paddingHorizontal: 8,
-		...commonStyles,
+		borderRadius: 8,
 	},
 });
 

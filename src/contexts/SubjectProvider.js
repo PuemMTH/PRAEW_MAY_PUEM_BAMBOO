@@ -1,98 +1,119 @@
 import createDataContext from "./createDataContext";
 
 const subjectReducer = (state, action) => {
-    switch (action.type) {
-        case "add-test":
-            // คือการหา id ที่มากที่สุดแล้วบวกเพิ่ม 1
-            const nextId = state.reduce((maxId, test) => {
-                return Math.max(maxId, test._id);
-            }, 0) + 1;
+	switch (action.type) {
+		case "add-test":
+			// คือการหา id ที่มากที่สุดแล้วบวกเพิ่ม 1
+			const nextId =
+				state.reduce((maxId, test) => {
+					return Math.max(maxId, test._id);
+				}, 0) + 1;
+			// คือการ return ข้อมูลเดิมแล้วเพิ่มข้อมูลใหม่เข้าไป
+			return [
+				...state,
+				{
+					_id: nextId,
+					sub_id: action.payload.sub_id,
+					subject_name: action.payload.subject_name,
+					sec: action.payload.sec,
+					room: action.payload.room,
+					time: action.payload.time,
+					day: action.payload.day,
+				},
+			];
+		case "delete-test":
+			// คือการลบข้อมูลที่มี id ตรงกับที่ส่งเข้ามา
+			// โดยการ return ข้อมูลที่มี id ไม่ตรงกับที่ส่งเข้ามา
+			return state.filter((test) => test._id !== action.payload._id);
+		case "edit-test":
+			// คือการแก้ไขข้อมูลที่มี id ตรงกับที่ส่งเข้ามา
+			// โดยการ return ข้อมูลที่มี id ตรงกับที่ส่งเข้ามา แล้วเปลี่ยนข้อมูลใหม่เข้าไป
+			return state.map((test) => {
+				if (test._id === action.payload._id) {
+					return action.payload;
+				} else {
+					return test;
+				}
+			});
+		default:
+			return state;
+	}
+};
 
-            return [
-                ...state,
-                {
-                    _id: nextId,
-                    sub_id: "",
-                    subject_name: "",
-                    sec: "",
-                    room: "",
-                    time: "",
-                    day: "",
-                }
-            ]
-        case "delete-test":
-            // คือการลบข้อมูลที่มี id ตรงกับที่ส่งเข้ามา
-            // โดยการ return ข้อมูลที่มี id ไม่ตรงกับที่ส่งเข้ามา 
-            return state.filter((memo) => memo.id !== action.payload);
-        case "edit-test":
-            // คือการแก้ไขข้อมูลที่มี id ตรงกับที่ส่งเข้ามา
-            // โดยการ return ข้อมูลที่มี id ตรงกับที่ส่งเข้ามา แล้วเปลี่ยนข้อมูลใหม่เข้าไป
-            return state.map((memo) =>
-				memo.id === action.payload.id ? action.payload : memo
-			);
-        default:
-            return state;
-    }
-}
+const addTest = (dispatch) => {
+	return (sub_id, subject_name, sec, room, time, day) => {
+		const updateTime = new Date();
+		console.table({ sub_id, subject_name, sec, room, time, day });
+		dispatch({
+			type: "add-test",
+			payload: { sub_id, subject_name, sec, room, time, day },
+		});
+	};
+};
 
-const addTest = (state, dispatch) => {
-    return (sub_id, subject_name, sec, room, time, day) => {
-        const updateTime = new Date()
-        dispatch({
-            type: "add-test",
-            payload: {
-                sub_id: action.payload.sub_id,
-                subject_name: action.payload.subject_name,
-                sec: action.payload.sec,
-                room: action.payload.room,
-                time: action.payload.time,
-                day: action.payload.day
-            }
-        })
+const deleteTest = (dispatch) => {
+	return (_id) => {
+		console.log("delete: " + _id);
+		dispatch({
+			type: "delete-test",
+			payload: { _id },
+		});
+	};
+};
 
-    }
-}
-
-const deleteTest = (state, dispatch) => {
-    return (id) => {
-        dispatch({
-            type: "delete-test",
-            payload: id
-        })
-    }
-}
-
-const editTest = (state, dispatch) => {
-    return (id, sub_id, subject_name, sec, room, time, day) => {
-        dispatch({
-            type: "edit-test",
-            payload: {
-                id: id,
-                sub_id: sub_id,
-                subject_name: subject_name,
-                sec: sec,
-                room: room,
-                time: time,
-                day: day
-            }
-        })
-    }
-}
+const editTest = (dispatch) => {
+	return (id, sub_id, subject_name, sec, room, time, day) => {
+		dispatch({
+			type: "edit-test",
+			payload: { id, sub_id, subject_name, sec, room, time, day },
+		});
+	};
+};
 
 export const { Context, Provider } = createDataContext(
-    subjectReducer,
-    {
-        addTest, deleteTest, editTest
-    },
-    [
-        {
-            _id: "1",
-            sub_id: "01418223",
-            subject_name: "Database System Concepts",
-            sec: "700",
-            room: "CB2301",
-            time: "19:00-21:00",
-            day: "29/09/2021",
-        }
-    ]
-)
+	subjectReducer,
+	{
+		addTest,
+		deleteTest,
+		editTest,
+	},
+	[
+		{
+			_id: "1",
+			sub_id: "01418223",
+			subject_name: "Database",
+			sec: "700",
+			room: "CB2301",
+			time: `${new Date().getHours()-5}.${new Date().getMinutes()}-${new Date().getHours()-2}.${new Date().getMinutes()}`,
+			// day: "29/08/2021",
+			day: `${new Date().getDate()+2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+		},
+		{
+			_id: "2",
+			sub_id: "01418222",
+			subject_name: "Concepts",
+			sec: "700",
+			room: "CB2301",
+			time: `${new Date().getHours()+3}.${new Date().getMinutes()}-${new Date().getHours()+5}.${new Date().getMinutes()}`,
+			day: `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+		},
+		{
+			_id: "3",
+			sub_id: "01418223",
+			subject_name: "System",
+			sec: "700",
+			room: "CB2301",
+			time: `${new Date().getHours()}.${new Date().getMinutes()}-${new Date().getHours()+3}.${new Date().getMinutes()}`,
+			day: `${new Date().getDate()-2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+		},
+		{
+			_id: "4",
+			sub_id: "01418223",
+			subject_name: "Database System Concepts",
+			sec: "700",
+			room: "CB2301",
+			time: `${new Date().getHours()}.${new Date().getMinutes()}-${new Date().getHours()+3}.${new Date().getMinutes()}`,
+			day: `${new Date().getDate()-5}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+		},
+	]
+);

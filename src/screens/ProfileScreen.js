@@ -6,24 +6,28 @@ const data = [
 		id: 1,
 		nisit_id: "6421600093",
 		username: "ธนภัทร เอี่ยมอาจ",
+		work: "Developer 25% for work",
 		image: require("../image/Puem.jpg"),
 	},
 	{
 		id: 2,
 		nisit_id: "6421600107",
 		username: "นภสร พุทธเจริญ",
+		work: "Developer 25% for work",
 		image: require("../image/Praew.jpg"),
 	},
 	{
 		id: 3,
 		nisit_id: "6421600263",
 		username: "ศศิธร สีแสด",
+		work: "Developer 25% for work",
 		image: require("../image/Bam.jpg"),
 	},
 	{
 		id: 4,
 		nisit_id: "6421602436",
 		username: "ชาลินี แซ่ลี้",
+		work: "Developer 25% for work",
 		image: require("../image/May.jpg"),
 	},
 ];
@@ -34,6 +38,7 @@ const ProfileScreen = () => {
 			<Image source={item.image} style={styles.image} />
 			<Text style={styles.username}>{item.username}</Text>
 			<Text style={styles.nisitId}>NISIT ID: {item.nisit_id}</Text>
+			<Text style={styles.work}>{item.work}</Text>
 		</View>
 	);
 
@@ -92,6 +97,11 @@ const styles = StyleSheet.create({
 	nisitId: {
 		fontSize: 16,
 		color: "gray",
+	},
+	work: {
+		fontSize: 16,
+		color: "gray",
+		marginTop: 10,
 	},
 });
 
