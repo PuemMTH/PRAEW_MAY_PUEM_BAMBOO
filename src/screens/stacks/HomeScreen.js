@@ -79,6 +79,7 @@ const HomeScreen = ({ navigation }) => {
 		const [day, month, year] = date.split("/");
 
 		// Note: ใช้ parseInt เพื่อแปลงค่าจาก String เป็น Number
+		// เพราะเดือนของ new Date() จะเริ่มนับจาก 0 ไม่ใช่ 1
 		const examDate = new Date(year, parseInt(month) - 1, parseInt(day));
 		// Note: ใช้ Math.ceil เพื่อปัดเศษขึ้นเป็นจำนวนเต็ม
 		const diffTime = examDate - today;
@@ -119,10 +120,6 @@ const HomeScreen = ({ navigation }) => {
 				data={afterSort}
 				renderItem={({ item }) => (
 					<View style={styles.label}>
-						{/* Edit */}
-
-						{/* Make 2 Column */}
-
 						<View
 							style={{
 								flexDirection: "row",
@@ -179,7 +176,7 @@ const HomeScreen = ({ navigation }) => {
 							) : checkDate(item.day) === "สอบเร็วๆนี้" ? (
 								<Text style={[styles.subtitle4,{color: "red" }]}>{checkDate(item.day)}</Text>
 							) : checkDate(item.day) === "ใกล้ถึงวันสอบ" ? (
-								<Text style={[styles.subtitle4,{color: "yellow" }]}>{checkDate(item.day)}</Text>
+								<Text style={[styles.subtitle4,{color: "orange" }]}>{checkDate(item.day)}</Text>
 							) : checkDate(item.day) === "สอบไปแล้ว" ? (
 								<Text style={[styles.subtitle4,{color: "gray" }]}>{checkDate(item.day)}</Text>
 							) : null

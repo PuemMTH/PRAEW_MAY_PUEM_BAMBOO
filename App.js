@@ -32,6 +32,7 @@ const StackScreen = ({ navigation }) => {
 				// add icon to header
 				options={{
 					headerTintColor : "#fff",
+					headerTitle : "Home",
 					headerStyle :{backgroundColor :'#FF8989'},
 					headerRight: () => (
 						<Ionicons
@@ -39,13 +40,14 @@ const StackScreen = ({ navigation }) => {
 							size={30}
 							color="#fff"
 							style={{ marginRight: 10 }}
-							onPress={() => navigation.navigate("SUBJECT")}
+							onPress={() => navigation.navigate("StackAdd")}
 						/>
 					),
 				}}
 			/>
 			<Stack.Screen
 				name="StackAdd"
+				headerTitle="Add"
 				component={AddScreen}
 				options={{
 					headerTintColor : "#fff",
@@ -73,6 +75,7 @@ export default function App() {
 						name="Home"
 						component={StackScreen}
 						options={{
+							headerTitle : "Home",
 							tabBarIcon: ({ color, size }) => (
 								<Ionicons name="home" color={color} size={size} />
 							),
@@ -84,6 +87,7 @@ export default function App() {
 						options={{
 							headerShown : true,
 							headerTintColor : "#fff",
+							headerTitle : "View",
 							headerStyle : {
 								backgroundColor: "#FF8989",
 								shadowColor : "#000" ,

@@ -35,11 +35,13 @@ const data = [
 const ProfileScreen = () => {
 	const renderItem = ({ item }) => (
 		
-		<View style={styles.personContainer}>
-			<Image source={item.image} style={styles.image} />
-			<Text style={styles.nisitId}>{item.nisit_id}</Text>
-			<Text style={styles.username}>{item.username}</Text>
-			<Text style={styles.work}>{item.work}</Text>
+		<View style={styles.box2}>
+			<View style={styles.personContainer}>
+				<Image source={item.image} style={styles.image} />
+				<Text style={styles.nisitId}>{item.nisit_id}</Text>
+				<Text style={styles.username}>{item.username}</Text>
+				<Text style={styles.work}>{item.work}</Text>
+			</View>
 		</View>
 	);
 
@@ -121,13 +123,24 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 	},
 	box : {
-		backgroundColor : "#fff",
-		marginTop : 80,
-		padding : 15,
-		borderRadius: 20,
-		paddingHorizontal : 50,
-		elevation : 10,
-	}
+        backgroundColor : "#fff",
+        marginTop : 80,
+        margin : 5,
+        padding : 15,
+        borderRadius: 20,
+        paddingHorizontal : 50,
+        elevation : 2,
+    },
+    box2 : {
+        backgroundColor : "#fff",
+        margin : 5,
+        marginTop : 20,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 25,
+        paddingHorizontal : 1,
+        elevation : 2,
+    }
 });
 
 export default ProfileScreen;

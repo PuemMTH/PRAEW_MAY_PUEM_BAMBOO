@@ -85,7 +85,7 @@ export const { Context, Provider } = createDataContext(
 			sec: "700",
 			room: "CB2301",
 			time: "09.00-10.00",
-			day: `${new Date().getDate()-2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+			day: `${new Date().getDate()+2}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 		{
 			_id: "2",
@@ -112,7 +112,7 @@ export const { Context, Provider } = createDataContext(
 			sec: "700",
 			room: "CB2301",
 			time: "18.00-20.00",
-			day: `${new Date().getDate()-5}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
+			day: `${new Date().getDate()-3}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
 		},
 	]
 );
